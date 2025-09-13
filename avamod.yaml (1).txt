@@ -106,49 +106,49 @@ proxy-groups:
 proxy-providers:
   'avax':
     url: >-
-      https://orang.oranglemah.web.id/sub/v2ray?type=vless&bug=ava.game.naver.com&tls=true&wildcard=true&limit=10&country=us
+      https://sub.oranglemah.my.id/vpn/v2ray?type=vless&bug=ava.game.naver.com.com&tls=true&wildcard=true&limit=5&country=sg
     path: ./avax
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'xava '}
     <<: *prof
   'ava1':
     url: >-
-      https://orang.oranglemah.web.id/sub/v2ray?type=vless&bug=ava.game.naver.com&tls=true&wildcard=true&limit=10&country=sg
+      https://sub.oranglemah.my.id/vpn/v2ray?type=vless&bug=ava.game.naver.com.com&tls=true&wildcard=true&limit=5&country=jp
     path: ./ava1
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'ava '}
     <<: *prof
   'ava':
     url: >-
-      https://orang.oranglemah.web.id/sub/v2ray?type=vless&bug=ava.game.naver.com&tls=true&wildcard=true&limit=10&country=id
+      https://sub.oranglemah.my.id/vpn/v2ray?type=vless&bug=ava.game.naver.com.com&tls=true&wildcard=true&limit=5&country=id
     path: ./ava
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'ava '}
     <<: *prof
   'ava2':
     url: >-
-      https://orang.oranglemah.web.id/sub/v2ray?type=vless&bug=ava.game.naver.com&tls=true&wildcard=true&limit=10&country=jp
+      https://sub.oranglemah.my.id/vpn/v2ray?type=vless&bug=ava.game.naver.com.com&tls=true&wildcard=true&limit=5&country=us
     path: ./ava2
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'ava2 '}
     <<: *prof
-  'ava3':
+  'vidio':
     url: >-
-      https://orang.oranglemah.web.id/sub/v2ray?type=vless&bug=ava.game.naver.com&tls=true&wildcard=true&limit=10&country=id
-    path: ./viu
-    override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'ava3 '}
+      https://sub.oranglemah.my.id/vpn/v2ray?type=vless&bug=quiz.int.vidio.com&tls=true&wildcard=false&limit=5&country=id
+    path: ./vidio
+    override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'vidio '}
     <<: *prof
   'xl-edu':
     url: >-
-      https://orang.oranglemah.web.id/sub/v2ray?type=vless&bug=104.17.3.81&tls=true&wildcard=false&limit=10&country=id
+      https://sub.oranglemah.my.id/vpn/v2ray?type=vless&bug=104.17.3.81&tls=true&wildcard=false&limit=5&country=sg
     path: ./xl-esu
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'xl-edu '}
     <<: *prof
   'xl-edu2':
     url: >-
-      https://orang.oranglemah.web.id/sub/v2ray?type=vless&bug=104.17.3.81&tls=true&wildcard=false&limit=10&country=jp
+      https://sub.oranglemah.my.id/vpn/v2ray?type=vless&bug=104.17.3.81&tls=true&wildcard=false&limit=5&country=jp
     path: ./xl-edu2
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'xl-edu2 '}
     <<: *prof
   'edu':
     url: >-
-      https://orang.oranglemah.web.id/sub/v2ray?type=vless&bug=104.17.3.81&tls=true&wildcard=false&limit=10&country=sg
+      https://sub.oranglemah.my.id/vpn/v2ray?type=vless&bug=104.17.3.81&tls=true&wildcard=false&limit=5&country=id
     path: ./edu
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'edu '}
     <<: *prof
