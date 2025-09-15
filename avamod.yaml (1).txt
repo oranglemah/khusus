@@ -112,7 +112,7 @@ proxy-providers:
     <<: *prof
   'ava1':
     url: >-
-      https://sub.oranglemah.my.id/vpn/v2ray?type=vless&bug=ava.game.naver.com&tls=true&wildcard=true&limit=5&country=jp
+      https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/vpnava.txt
     path: ./ava1
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'ava '}
     <<: *prof
