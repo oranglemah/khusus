@@ -95,10 +95,10 @@ proxy-groups:
       exclude-filter: UDP
       type: fallback
       url: 'http://connectivitycheck.gstatic.com/generate_204'
-      interval: 600
+      interval: 1800
       lazy: true
-    - interval: 600
-      tolerance: 100
+    - interval: 6000
+      tolerance: 1000
       name: Server UDP
       use: [ udp2 ]
       type: fallback
