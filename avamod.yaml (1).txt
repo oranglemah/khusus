@@ -106,7 +106,7 @@ proxy-groups:
 proxy-providers:
   'avax':
     url: >-
-      https://joss.krikkrik.tech/vpn/v2ray?type=vless&bug=ava.game.naver.com&tls=true&wildcard=true&limit=5&country=sg
+      https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/avavlessjp.txt
     path: ./avax
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'xava '}
     <<: *prof
@@ -130,13 +130,13 @@ proxy-providers:
     <<: *prof
   'vidio':
     url: >-
-      https://joss.krikkrik.tech/vpn/v2ray?type=vless&bug=quiz.int.vidio.com&tls=true&wildcard=false&limit=5&country=id
+      https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/vpnvidioID.txt
     path: ./vidio
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'vidio '}
     <<: *prof
   'xl-edu':
     url: >-
-      https://joss.krikkrik.tech/vpn/v2ray?type=vless&bug=104.17.3.81&tls=true&wildcard=false&limit=5&country=sg
+      https://nautica.zerostore.tech/api/v1/sub?cc=SG&format=raw&limit=10&vpn=vless&port=443&domain=104.17.3.81
     path: ./xl-esu
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'xl-edu '}
     <<: *prof
@@ -148,7 +148,7 @@ proxy-providers:
     <<: *prof
   'edu':
     url: >-
-      https://joss.krikkrik.tech/vpn/v2ray?type=vless&bug=104.17.3.81&tls=true&wildcard=false&limit=5&country=id
+      https://nautica.zerostore.tech/api/v1/sub?cc=ID&format=raw&limit=10&vpn=vless&port=443&domain=104.17.3.81
     path: ./edu
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'edu '}
     <<: *prof
