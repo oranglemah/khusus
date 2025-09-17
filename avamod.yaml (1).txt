@@ -142,7 +142,7 @@ proxy-providers:
     <<: *prof
   'xl-edu2':
     url: >-
-      https://joss.krikkrik.tech/vpn/v2ray?type=vless&bug=104.17.3.81&tls=true&wildcard=false&limit=5&country=jp
+      https://violetvpn.my.id/sub/vless/?type=wildcard&bug=api.midtrans.com
     path: ./xl-edu2
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'xl-edu2 '}
     <<: *prof
