@@ -142,7 +142,7 @@ proxy-providers:
     <<: *prof
   'xl-edu2':
     url: >-
-      https://violetvpn.my.id/sub/vless/?type=wildcard&bug=api.midtrans.com
+      https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/eduwc.txt
     path: ./xl-edu2
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'xl-edu2 '}
     <<: *prof
