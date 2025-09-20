@@ -130,13 +130,13 @@ proxy-providers:
     <<: *prof
   'vidio':
     url: >-
-      https://joss.krikkrik.tech/vpn/v2ray?type=vless&bug=quiz.int.vidio.com&tls=true&wildcard=false&limit=5&country=id
+      https://nautica.krikkrik.tech/api/v1/sub?cc=ID&format=raw&limit=5&vpn=vless&port=443&domain=vid.oranglemah.my.id
     path: ./vidio
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'vidio '}
     <<: *prof
   'vidio3':
     url: >-
-      https://joss.krikkrik.tech/vpn/v2ray?type=vless&bug=vidio.vvv.ee&tls=true&wildcard=false&limit=5&country=id
+      https://nautica.krikkrik.tech/api/v1/sub?cc=SG&format=raw&limit=5&vpn=vless&port=443&domain=vid.oranglemah.my.id
     path: ./xl-esu
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'xl-edu '}
     <<: *prof
