@@ -1,0 +1,25 @@
+[
+    {
+        "name": "Paket xtra&basic",
+        "price": "Rp13000",
+        "detail": "Tested metode E-Wallet & QRIS.\nSaldo akan di-refund setelah 10-30 menit.\nPastikan metode scan QRIS support refund.\nTidak bisa akumulasi. Pastikan masa aktif saat ini kurang dari 1 bulan.",
+        "packages": [
+            {
+                "family_name": "Xtra combo",
+                "family_code": "6bc5a34d-7901-4bf9-8629-5bd7de28c89f",
+                "is_enterprise": false,
+                "variant_name": "Xtra combo",
+                "option_name": "1gb + 1gb",
+                "order": 1
+            },
+            {
+                "family_name": "Unlimited Turbo",
+                "family_code": "08a3b1e6-8e78-4e45-a540-b40f06871cfe",
+                "is_enterprise": false,
+                "variant_name": "For Xtra HotRod",
+                "option_name": "Basic",
+                "order": 15
+            }
+        ]
+    }
+]
