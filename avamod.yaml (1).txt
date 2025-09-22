@@ -136,7 +136,7 @@ proxy-providers:
     <<: *prof
   'xl-edu':
     url: >-
-      https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/edusg.txt
+      https://violetvpn.my.id/sub/vless/?type=wildcard&bug=support.zoom.us
     path: ./xl-esu
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'xl-edu '}
     <<: *prof
