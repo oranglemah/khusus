@@ -154,7 +154,7 @@ proxy-providers:
     <<: *prof
   'udp2':
     url: >-
-      https://raw.githubusercontent.com/absurd100/test/refs/heads/main/UDP-nau.yaml
+      https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/udp
     path: ./UDP2
     override: {skip-cert-verify: true, packet-encoding: xudp, network: tcp, smux: {enabled: true}, additional-prefix: 'UDP '}
     <<: *prof
