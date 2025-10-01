@@ -2,7 +2,7 @@
 hosts:
   'bug': [ 104.18.3.2, 104.18.2.2 ]
 
-prof: &prof {type: http, size-limit: 15000, interval: 10800, health-check: {enable: true, url: http://connectivitycheck.gstatic.com/generate_204, interval: 900}}
+prof: &prof {type: http, size-limit: 15000, interval: 10800, health-check: {enable: true, url: http://connectivitycheck.gstatic.com/generate_204, interval: 3600}}
       
 global-client-fingerprint: random
 log-level: silent
@@ -95,7 +95,7 @@ proxy-groups:
       exclude-filter: UDP
       type: fallback
       url: 'http://connectivitycheck.gstatic.com/generate_204'
-      interval: 30
+      interval: 300
       lazy: true
     - interval: 600
       tolerance: 1000
