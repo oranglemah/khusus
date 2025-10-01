@@ -1,6 +1,6 @@
 #jika config Wildcald anda tidak muncul, chat aja admin buat masukin Wildcald kalian. 
 hosts:
-  'bug': [ 104.18.3.2, 104.18.2.2 ]
+  'bug': [ 104.18.213.235, 104.18..214.235 ]
 
 prof: &prof {type: http, size-limit: 15000, interval: 10800, health-check: {enable: true, url: http://connectivitycheck.gstatic.com/generate_204, interval: 3600}}
       
