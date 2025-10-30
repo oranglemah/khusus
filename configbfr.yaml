@@ -87,9 +87,9 @@ proxy-groups:
   strategy: round-robin
   disable-udp: false
   use:
-  - SG Leaseweb
-  - SG Akari
-  - SG Point
+  - ID Edu
+  - ID Zoom
+  - SG Edu
   url: http://www.gstatic.com/generate_204
   interval: '30'
 - name: 𝐈𝐍𝐃𝐎𝐍𝐄𝐒𝐈𝐀
@@ -102,9 +102,9 @@ proxy-groups:
   interval: '30'
 #============P R O V I D E R S===========#
 proxy-providers:
-  SG Leaseweb:
+  ID Edu:
     type: http
-    url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/ava%20vless.txt"
+    url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/eduudp.txt"
     path: "./proxy_provider/SG Leaseweb.yaml"  # cache lokal (opsional tapi disarankan)
     interval: 86400
     health-check:
@@ -112,7 +112,7 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 300
 
-  SG Akari:
+  ID Zoom:
     type: http
     url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/eduwc.txt"
     path: "./proxy_provider/SG Akari.yaml"
@@ -122,7 +122,7 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 300
 
-  SG Point:
+  SG Edu:
     type: http
     url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/edusg.txt"
     path: "./proxy_provider/SG Point.yaml"
