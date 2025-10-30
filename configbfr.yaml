@@ -105,7 +105,7 @@ proxy-providers:
   ID Edu:
     type: http
     url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/eduudp.txt"
-    path: "./proxy_provider/SG Leaseweb.yaml"  # cache lokal (opsional tapi disarankan)
+    path: "./proxy_provider/ID EDU.yaml"  # cache lokal (opsional tapi disarankan)
     interval: 86400
     health-check:
       enable: true
@@ -115,7 +115,7 @@ proxy-providers:
   ID Zoom:
     type: http
     url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/eduwc.txt"
-    path: "./proxy_provider/SG Akari.yaml"
+    path: "./proxy_provider/ID Zoom.yaml"
     interval: 86400
     health-check:
       enable: true
@@ -125,7 +125,7 @@ proxy-providers:
   SG Edu:
     type: http
     url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/edusg.txt"
-    path: "./proxy_provider/SG Point.yaml"
+    path: "./proxy_provider/SG Edu.yaml"
     interval: 86400
     health-check:
       enable: true
