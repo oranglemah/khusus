@@ -1,3 +1,4 @@
+# ===================== CORE PORTS ===================== #
 #port: 7890
 #socks-port: 7891
 #mixed-port: 7893
@@ -10,60 +11,78 @@ bind-address: '*'
 log-level: silent
 ipv6: false
 # geodata-loader: memconservative
-external-controller: 0.0.0.0:9090
-# secret: "123456"
-external-ui: /data/adb/box/clash/dashboard/
-external-ui-url: "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip" #从 GitHub Pages
-# tcp-concurrent: false
 
+# ===================== API & UI ======================= #
+external-controller: 0.0.0.0:9090          # REST API Clash/Mihomo
+external-controller-cors:                  # izinkan akses dari dashboard mana pun
+  allow-origins:
+    - '*'
+  allow-private-network: true              # untuk akses dari LAN juga
+external-ui: /data/adb/box/clash/dashboard/
+external-ui-url: "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip"
+
+# ===================== PROFILE ======================== #
 profile:
   store-selected: true
   store-fake-ip: false
-#===============S N I F F===============#
+
+# ===================== SNIFFER ======================== #
 sniffer:
   enable: true
   force-dns-mapping: true
   parse-pure-ip: true
   override-destination: true
   sniff:
-    QUIC:
-      ports: [443]
-    TLS:
-      ports: [443, 8443]
     HTTP:
       ports: [80, 8080-8880]
       override-destination: true
-      sniffing: [http, tls] # add ", quic" after tls
-#=================T U N=================#
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443]               # umum 443; bisa tambah 8443 jika perlu
+  # force-domain:
+  #   - +.v2ex.com
+  # skip-domain:
+  #   - "+.push.apple.com"
+
+# ===================== TUN (router: off) ============== #
 tun:
   exclude-package: []
   enable: false
   device: utun
   mtu: 9000
-  stack: system # gvisor / lwip / system
+  stack: system                  # gvisor / lwip / system
   dns-hijack:
     - any:53
     - tcp://any:53
   auto-route: true
   auto-detect-interface: true
-#=================D N S=================#
+
+# ===================== DNS ============================ #
 dns:
   enable: true
   ipv6: false
-  default-nameserver:
-    - 1.1.1.1
-    - 8.8.8.8
   listen: 0.0.0.0:1053
   use-hosts: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
+  # tambahkan filter umum agar layanan tertentu tidak pakai fake-ip
   fake-ip-filter:
     - '*.lan'
-    - "*.local"
+    - '*.local'
+    - 'ntp.*'
+    - 'time.*'
+    - 'connectivitycheck.gstatic.com'
+    - '*.msftncsi.com'
+    - '*.apple.com'
+    - '*.push.apple.com'
+  default-nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
   nameserver:
     - 1.0.0.1
     - 8.8.4.4
-  proxy-server-nameserver:
+  proxy-server-nameserver:        # upstream untuk kueri yang lewat proxy
     - 112.215.198.248 #XL
     - 112.215.198.254 #XL
     - 112.215.203.246 #XL
@@ -71,41 +90,48 @@ dns:
     - 112.215.203.248 #XL
     - 112.215.203.254 #XL
   respect-rules: true
-#=============P R O X I E S==============#
-proxies:
+
+# ===================== PROXIES ======================== #
+proxies: []                      # biarkan kosong; semua node dari providers
+
+# ===================== GROUPS ========================= #
 proxy-groups:
-- name: Ü𝖇𝖊𝖗𝖒𝖊𝖓𝖘𝖈𝖍
-  type: select
-  disable-udp: false
-  proxies:
-  - 𝐒𝐈𝐍𝐆𝐀𝐏𝐎𝐑𝐄
-  - 𝐈𝐍𝐃𝐎𝐍𝐄𝐒𝐈𝐀
-  url: http://www.gstatic.com/generate_204
-  interval: '30'
-- name: 𝐒𝐈𝐍𝐆𝐀𝐏𝐎𝐑𝐄
-  type: fallback
-  strategy: round-robin
-  disable-udp: false
-  use:
-  - ID Edu
-  - ID Zoom
-  - SG Edu
-  url: http://www.gstatic.com/generate_204
-  interval: '30'
-- name: 𝐈𝐍𝐃𝐎𝐍𝐄𝐒𝐈𝐀
-  type: fallback
-  strategy: round-robin
-  disable-udp: false
-  use:
-  - ID Nusa
-  url: http://www.gstatic.com/generate_204
-  interval: '30'
-#============P R O V I D E R S===========#
+  - name: "Ü𝖇𝖊𝖗𝖒𝖊𝖓𝖘𝖈𝖍"
+    type: select
+    disable-udp: false
+    proxies:
+      - "𝐒𝐈𝐍𝐆𝐀𝐏𝐎𝐑𝐄"
+      - "𝐈𝐍𝐃𝐎𝐍𝐄𝐒𝐈𝐀"
+      - DIRECT
+    url: http://www.gstatic.com/generate_204
+    interval: 30
+
+  - name: "𝐒𝐈𝐍𝐆𝐀𝐏𝐎𝐑𝐄"
+    type: fallback
+    strategy: round-robin
+    disable-udp: false
+    use:
+      - ID Edu
+      - ID Zoom
+      - SG Edu
+    url: http://www.gstatic.com/generate_204
+    interval: 30
+
+  - name: "𝐈𝐍𝐃𝐎𝐍𝐄𝐒𝐈𝐀"
+    type: fallback
+    strategy: round-robin
+    disable-udp: false
+    use:
+      - ID Nusa
+    url: http://www.gstatic.com/generate_204
+    interval: 30
+
+# ===================== PROVIDERS ====================== #
 proxy-providers:
   ID Edu:
     type: http
     url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/eduudp.txt"
-    path: "./proxy_provider/ID EDU.yaml"  # cache lokal (opsional tapi disarankan)
+    path: "./proxy_provider/ID EDU.yaml"   # cache lokal
     interval: 86400
     health-check:
       enable: true
@@ -142,6 +168,6 @@ proxy-providers:
       url: http://www.gstatic.com/generate_204
       interval: 300
 
-#==============R U L E S==============#
+# ===================== RULES ========================== #
 rules:
-- MATCH,GLOBAL
+  - MATCH,"Ü𝖇𝖊𝖗𝖒𝖊𝖓𝖘𝖈𝖍"
