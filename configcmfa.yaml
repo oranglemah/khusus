@@ -1,0 +1,173 @@
+# ===================== CORE PORTS ===================== #
+#port: 7890
+#socks-port: 7891
+#mixed-port: 7893
+redir-port: 9797
+tproxy-port: 9898
+mode: rule
+allow-lan: true
+unified-delay: true
+bind-address: '*'
+log-level: silent
+ipv6: false
+# geodata-loader: memconservative
+
+# ===================== API & UI ======================= #
+external-controller: 0.0.0.0:9090          
+external-controller-cors:                  
+  allow-origins:
+    - '*'
+  allow-private-network: true             
+external-ui: /data/adb/box/clash/dashboard/
+external-ui-url: "https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip"
+
+# ===================== PROFILE ======================== #
+profile:
+  store-selected: true
+  store-fake-ip: false
+
+# ===================== SNIFFER ======================== #
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443]               
+  # force-domain:
+  #   - +.v2ex.com
+  # skip-domain:
+  #   - "+.push.apple.com"
+
+# ===================== TUN (router: off) ============== #
+tun:
+  exclude-package: []
+  enable: false
+  device: utun
+  mtu: 9000
+  stack: system                  # gvisor / lwip / system
+  dns-hijack:
+    - any:53
+    - tcp://any:53
+  auto-route: true
+  auto-detect-interface: true
+
+# ===================== DNS ============================ #
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:1053
+  use-hosts: true
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  # tambahkan filter umum agar layanan tertentu tidak pakai fake-ip
+  fake-ip-filter:
+    - '*.lan'
+    - '*.local'
+    - 'ntp.*'
+    - 'time.*'
+    - 'connectivitycheck.gstatic.com'
+    - '*.msftncsi.com'
+    - '*.apple.com'
+    - '*.push.apple.com'
+  default-nameserver:
+    - 1.1.1.1
+    - 8.8.8.8
+  nameserver:
+    - 1.0.0.1
+    - 8.8.4.4
+  proxy-server-nameserver:        # upstream untuk kueri yang lewat proxy
+    - 112.215.198.248 #XL
+    - 112.215.198.254 #XL
+    - 112.215.203.246 #XL
+    - 112.215.203.247 #XL
+    - 112.215.203.248 #XL
+    - 112.215.203.254 #XL
+  respect-rules: true
+
+# ===================== PROXIES ======================== #
+proxies: []                     
+
+# ===================== GROUPS ========================= #
+proxy-groups:
+  - name: "Ü𝖇𝖊𝖗𝖒𝖊𝖓𝖘𝖈𝖍"
+    type: select
+    disable-udp: false
+    proxies:
+      - "𝐈𝐍𝐃𝐎𝐍𝐄𝐒𝐈𝐀"
+      - "𝐒𝐈𝐍𝐆𝐀𝐏𝐎𝐑𝐄"
+      - DIRECT
+    url: http://www.gstatic.com/generate_204
+    interval: 30
+
+  - name: "𝐈𝐍𝐃𝐎𝐍𝐄𝐒𝐈𝐀"
+    type: fallback
+    strategy: round-robin
+    disable-udp: false
+    use:
+      - ID 1
+      - ID 2
+      - ID 3 
+    url: http://www.gstatic.com/generate_204
+    interval: 30
+
+  - name: "𝐒𝐈𝐍𝐆𝐀𝐏𝐎𝐑𝐄"
+    type: fallback
+    strategy: round-robin
+    disable-udp: false
+    use:
+      - SG
+    url: http://www.gstatic.com/generate_204
+    interval: 30
+
+# ===================== PROVIDERS ====================== #
+proxy-providers:
+  ID 1:
+    type: http
+    url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/test.noice.id.txt"
+    path: "./proxy_provider/ID 1.yaml"   # cache lokal
+    interval: 86400
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+  ID 2:
+    type: http
+    url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/uat.noice.id.txt"
+    path: "./proxy_provider/ID 2.yaml"
+    interval: 86400
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+  ID 3:
+    type: http
+    url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/listen.noice.id.txt"
+    path: "./proxy_provider/ID 3.yaml"
+    interval: 86400
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+  SG :
+    type: http
+    url: "https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/ID%20wa.txt"
+    path: "./proxy_provider/SG.yaml"
+    interval: 86400
+    health-check:
+      enable: true
+      url: http://www.gstatic.com/generate_204
+      interval: 300
+
+# ===================== RULES ========================== #
+rules:
+  - MATCH,Ü𝖇𝖊𝖗𝖒𝖊𝖓𝖘𝖈𝖍
