@@ -155,7 +155,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'ava '
+      additional-prefix: 'ava1 '
     <<: *prof
 
   AID 3:
@@ -166,7 +166,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'ava '
+      additional-prefix: 'ava2 '
     <<: *prof
 
   AID 4:
@@ -177,7 +177,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'ava2 '
+      additional-prefix: 'ava3 '
     <<: *prof
 
   xl-edu:
