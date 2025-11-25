@@ -108,7 +108,6 @@ proxy-groups:
 
   - name: "𝐈𝐍𝐃𝐎𝐍𝐄𝐒𝐈𝐀"
     type: fallback
-    strategy: round-robin
     disable-udp: false
     use:
       - ID 1
@@ -119,7 +118,6 @@ proxy-groups:
 
   - name: "𝐒𝐈𝐍𝐆𝐀𝐏𝐎𝐑𝐄"
     type: fallback
-    strategy: round-robin
     disable-udp: false
     use:
       - SG
