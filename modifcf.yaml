@@ -136,7 +136,7 @@ proxy-groups:
     tolerance: 1000
 
 proxy-providers:
-  ID 1:
+  AID 1:
     url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/test.noice.id.txt
     path: ./avax
     override:
@@ -147,7 +147,7 @@ proxy-providers:
       additional-prefix: 'xava '
     <<: *prof
 
-  ID 2:
+  AID 2:
     url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/vpnava.txt
     path: ./ava1
     override:
@@ -158,7 +158,7 @@ proxy-providers:
       additional-prefix: 'ava '
     <<: *prof
 
-  ID 3:
+  AID 3:
     url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/ava%20vless.txt
     path: ./ava
     override:
@@ -169,7 +169,7 @@ proxy-providers:
       additional-prefix: 'ava '
     <<: *prof
 
-  ID 4:
+  AID 4:
     url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/vpnavaSG.txt
     path: ./ava2
     override:
