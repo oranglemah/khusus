@@ -138,29 +138,29 @@ proxy-groups:
 proxy-providers:
   AID 1:
     url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/test.noice.id.txt
-    path: ./avax
+    path: ./ava
     override:
       skip-cert-verify: true
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'xava '
+      additional-prefix: 'ava '
     <<: *prof
 
   AID 2:
     url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/vpnava.txt
-    path: ./ava1
+    path: ./ava2
     override:
       skip-cert-verify: true
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'ava1 '
+      additional-prefix: 'ava2 '
     <<: *prof
 
   AID 3:
     url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/ava%20vless.txt
-    path: ./ava
+    path: ./ava1
     override:
       skip-cert-verify: true
       packet-encoding: xudp
@@ -171,7 +171,7 @@ proxy-providers:
 
   AID 4:
     url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/vpnavaSG.txt
-    path: ./ava2
+    path: ./ava3
     override:
       skip-cert-verify: true
       packet-encoding: xudp
