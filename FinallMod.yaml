@@ -108,15 +108,6 @@ proxy-groups:
     exclude-filter: UDP
     lazy: true
 
-  # Grup khusus UDP (game, VoIP, dll)
-  - name: UDP
-    type: select
-    proxies:
-      - Server UDP
-      - PASS
-    use: [udp2]
-    lazy: true
-
   # Konten dewasa (default PASS = bebas)
   - name: porn
     type: select
@@ -141,14 +132,6 @@ proxy-groups:
     url: 'http://connectivitycheck.gstatic.com/generate_204'
     interval: 300
     lazy: true
-
-  # Fallback khusus server UDP
-  - name: Server UDP
-    type: fallback
-    use: [udp2]
-    url: 'http://connectivitycheck.gstatic.com/generate_204'
-    interval: 600
-    tolerance: 1000
 
 proxy-providers:
   AID 1:
@@ -226,17 +209,6 @@ proxy-providers:
       network: tcp
       smux: {enabled: true}
       additional-prefix: 'edu '
-    <<: *prof
-
-  udp2:
-    url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/udp.txt
-    path: ./UDP2
-    override:
-      skip-cert-verify: true
-      packet-encoding: xudp
-      network: tcp
-      smux: {enabled: true}
-      additional-prefix: 'UDP '
     <<: *prof
 
 rule-providers:
@@ -342,6 +314,9 @@ rules:
   - RULE-SET,phishing,REJECT
   - RULE-SET,torrent,REJECT
 
+  # YouTube & streaming lain ke UMUM (worker TCP)
+  - RULE-SET,youtube,UMUM
+
   # LAN & IP lokal direct (biar kayak internet reguler)
   - IP-CIDR,127.0.0.0/8,DIRECT
   - IP-CIDR,10.0.0.0/8,DIRECT
@@ -354,8 +329,8 @@ rules:
   - DST-PORT,123/136/137-139,DIRECT
   - SRC-PORT,123/136/137-139,DIRECT,udp
 
-  # Semua trafik UDP lewat grup UDP (pakai akun worker UDP)
-  - NETWORK,UDP,UDP
+  # Blok QUIC (UDP 443) supaya app fallback ke HTTPS/TCP
+  - DST-PORT,443,REJECT,udp
 
   # Sisanya: full lewat UMUM (akun VPN worker, bebas akses web/app)
   - MATCH,UMUM
