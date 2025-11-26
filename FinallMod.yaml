@@ -56,46 +56,42 @@ sniffer:
 
 dns:
   enable: true
-  prefer-h3: false              # dimatikan demi stabilitas kalau pakai respect-rules
+  prefer-h3: false              # dimatikan biar lebih stabil
   use-hosts: true
   use-system-hosts: true
-  respect-rules: true           # DNS ikut rules (bisa lewat proxy)
+  respect-rules: true
   listen: 0.0.0.0:53
   ipv6: true
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
 
-  # dipakai buat nge-resolve host server DNS (DoH) – wajib IP
-  default-nameserver:
-    - 1.1.1.1
-    - 8.8.8.8
-
-  # DNS utama untuk browsing (lebih private, lewat grup UMUM = lewat proxy)
+  # mirip config awal: system + DoH
   nameserver:
-    - "https://1.1.1.1/dns-query#UMUM"
-    - "https://8.8.8.8/dns-query#UMUM"
+    - system
+    - "https://8.8.8.8/dns-query#ecs=223.5.5.0/24&ecs-override=true"
+    - "https://1.1.1.1/dns-query#ecs=223.5.5.0/24&ecs-override=true"
 
-  # DNS cadangan, juga DoH dan tetap lewat UMUM
   fallback:
-    - "https://9.9.9.9/dns-query#UMUM"
-    - "https://149.112.112.112/dns-query#UMUM"
+    - system
+    - 1.1.1.1
+    - 1.0.0.1
+    - 8.8.8.8
+    - 8.8.4.4
 
-  # DNS khusus untuk resolve domain node proxy
-  # Utama: DoH global; Fallback: DNS XL (buat jaga-jaga kalau DoH bermasalah)
+  # khusus buat resolve domain node proxy:
+  # DoH global + DNS XL (stabil), tanpa #group yang aneh2
   proxy-server-nameserver:
     - "https://1.1.1.1/dns-query"
     - "https://8.8.8.8/dns-query"
     - 112.215.198.248      # XL
     - 112.215.198.254      # XL
+    - 112.215.203.246      # XL
+    - 112.215.203.247      # XL
+    - 112.215.203.248      # XL
+    - 112.215.203.254      # XL
 
   fallback-filter:
     geosite: [gfw]
-
-  # Domain tertentu boleh pakai DNS XL (kompromi stabilitas + paket XL/EDU)
-  nameserver-policy:
-    "+.byu.id": 112.215.198.248
-    "+.xl.co.id": 112.215.198.248
-    "+.axis.co.id": 112.215.198.248
 
 proxy-groups:
   # Grup utama semua internet
@@ -129,7 +125,7 @@ proxy-groups:
     type: fallback
     include-all-providers: true
     exclude-filter: UDP
-    url: 'http://connectivitycheck.gstatic.com/generate_204'
+    url: "http://connectivitycheck.gstatic.com/generate_204"
     interval: 300
     lazy: true
 
@@ -142,7 +138,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'ava '
+      additional-prefix: "ava "
     <<: *prof
 
   AID 2:
@@ -153,7 +149,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'ava2 '
+      additional-prefix: "ava2 "
     <<: *prof
 
   AID 3:
@@ -164,7 +160,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'ava2 '
+      additional-prefix: "ava2 "
     <<: *prof
 
   AID 4:
@@ -175,7 +171,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'ava3 '
+      additional-prefix: "ava3 "
     <<: *prof
 
   xl-edu:
@@ -186,7 +182,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'xl-edu '
+      additional-prefix: "xl-edu "
     <<: *prof
 
   xl-edu2:
@@ -197,7 +193,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'xl-edu2 '
+      additional-prefix: "xl-edu2 "
     <<: *prof
 
   edu:
@@ -208,7 +204,7 @@ proxy-providers:
       packet-encoding: xudp
       network: tcp
       smux: {enabled: true}
-      additional-prefix: 'edu '
+      additional-prefix: "edu "
     <<: *prof
 
 rule-providers:
@@ -317,14 +313,14 @@ rules:
   # YouTube & streaming lain ke UMUM (worker TCP)
   - RULE-SET,youtube,UMUM
 
-  # LAN & IP lokal direct (biar kayak internet reguler)
+  # LAN & IP lokal direct
   - IP-CIDR,127.0.0.0/8,DIRECT
   - IP-CIDR,10.0.0.0/8,DIRECT
   - IP-CIDR,172.16.0.0/12,DIRECT
   - IP-CIDR,192.168.0.0/16,DIRECT
   - IP-CIDR,224.0.0.0/4,DIRECT
 
-  # DNS / NTP / NetBIOS port penting direct
+  # DNS / NTP / NetBIOS
   - DST-PORT,53,DIRECT
   - DST-PORT,123/136/137-139,DIRECT
   - SRC-PORT,123/136/137-139,DIRECT,udp
@@ -332,5 +328,5 @@ rules:
   # Blok QUIC (UDP 443) supaya app fallback ke HTTPS/TCP
   - DST-PORT,443,REJECT,udp
 
-  # Sisanya: full lewat UMUM (akun VPN worker, bebas akses web/app)
+  # Sisanya lewat UMUM
   - MATCH,UMUM
