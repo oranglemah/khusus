@@ -1,8 +1,8 @@
-# Config Clash Verge PC (Fixed)
+# Config Clash Verge PC (FIXED VERSION)
 hosts:
   'bug': [104.18.3.2, 104.18.2.2]
 
-# Anchor profile setting
+# Template settings
 prof: &prof {type: http, size-limit: 15000, interval: 10800, health-check: {enable: true, url: http://connectivitycheck.gstatic.com/generate_204, interval: 3600}}
 
 global-client-fingerprint: random
@@ -18,11 +18,11 @@ allow-lan: true
 unified-delay: true
 tcp-concurrent: true
 
-# Hapus atau comment baris di bawah jika pakai Windows agar auto-detect
+# Hapus baris interface-name jika di Windows agar auto-detect
 # interface-name: en0 
 
 profile:
-  store-selected: true # Ubah ke true agar pilihan server tersimpan saat restart
+  store-selected: true
   store-fake-ip: true
 
 geodata-mode: true
@@ -88,7 +88,7 @@ proxy-groups:
       - AUTO ALL
       - DIRECT
     include-all-providers: true
-    exclude-filter: UDP # Filter agar node UDP tidak masuk sini
+    exclude-filter: UDP # Filter agar akun UDP tidak masuk ke browsing biasa
     lazy: true
 
   # Grup khusus UDP (game, VoIP, dll)
@@ -104,21 +104,21 @@ proxy-groups:
   - name: porn
     type: select
     proxies:
-      - DIRECT # "PASS" diganti DIRECT (Buka)
-      - REJECT # (Blokir)
+      - DIRECT # "PASS" diganti DIRECT
+      - REJECT
     lazy: true
 
   # Iklan web
   - name: IKLANWEB
     type: select
     proxies:
-      - REJECT # Default Blokir
-      - DIRECT # Buka
+      - REJECT # Iklan default diblokir
+      - DIRECT # Iklan diizinkan
     lazy: true
 
-  # Otomatis pilih node terbaik
+  # Otomatis pilih node terbaik (Kecuali UDP)
   - name: AUTO ALL
-    type: fallback # Fallback lebih stabil daripada url-test untuk main connection
+    type: fallback
     include-all-providers: true
     exclude-filter: UDP
     url: 'http://connectivitycheck.gstatic.com/generate_204'
@@ -135,7 +135,7 @@ proxy-groups:
 
 proxy-providers:
   AID 1:
-    url: https://raw.githubusercontent.com/oranglemah97/umum/refs/heads/main/edu.txt
+    url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/test.noice.id.txt
     path: ./ava
     override:
       skip-cert-verify: true
@@ -145,8 +145,74 @@ proxy-providers:
       additional-prefix: 'ava '
     <<: *prof
 
+  AID 2:
+    url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/vpnava.txt
+    path: ./ava2
+    override:
+      skip-cert-verify: true
+      packet-encoding: xudp
+      network: tcp
+      smux: {enabled: true}
+      additional-prefix: 'ava2 '
+    <<: *prof
+
+  AID 3:
+    url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/ava%20vless.txt
+    path: ./ava1
+    override:
+      skip-cert-verify: true
+      packet-encoding: xudp
+      network: tcp
+      smux: {enabled: true}
+      additional-prefix: 'ava2 '
+    <<: *prof
+
+  AID 4:
+    url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/vpnavaSG.txt
+    path: ./ava3
+    override:
+      skip-cert-verify: true
+      packet-encoding: xudp
+      network: tcp
+      smux: {enabled: true}
+      additional-prefix: 'ava3 '
+    <<: *prof
+
+  xl-edu:
+    url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/edusg.txt
+    path: ./xl-edu
+    override:
+      skip-cert-verify: true
+      packet-encoding: xudp
+      network: tcp
+      smux: {enabled: true}
+      additional-prefix: 'xl-edu '
+    <<: *prof
+
+  xl-edu2:
+    url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/eduwc.txt
+    path: ./xl-edu2
+    override:
+      skip-cert-verify: true
+      packet-encoding: xudp
+      network: tcp
+      smux: {enabled: true}
+      additional-prefix: 'xl-edu2 '
+    <<: *prof
+
+  edu:
+    url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/eduID.txt
+    path: ./edu
+    override:
+      skip-cert-verify: true
+      packet-encoding: xudp
+      network: tcp
+      smux: {enabled: true}
+      additional-prefix: 'edu '
+    <<: *prof
+
   udp2:
-    url: https://raw.githubusercontent.com/oranglemah97/umum/refs/heads/main/edu.txt
+    url: https://raw.githubusercontent.com/oranglemah/khusus/refs/heads/main/udp.txt
     path: ./UDP2
     override:
       skip-cert-verify: true
@@ -237,6 +303,14 @@ rule-providers:
     path: ./ruleset/bank.yaml
     interval: 86400
 
+  cloudflare:
+    type: http
+    format: yaml
+    behavior: domain
+    url: https://raw.githubusercontent.com/Zulfatok/Rule_provider/refs/heads/main/rule_provider/SANZ-Cloudflare.yaml
+    path: ./ruleset/cloudflare.yaml
+    interval: 86400
+
   speedtest:
     type: http
     format: yaml
@@ -246,35 +320,30 @@ rule-providers:
     interval: 86400
 
 rules:
-  # 1. Security & Ads
+  # 1. Block Malware & Phishing
   - RULE-SET,malware,REJECT
   - RULE-SET,phishing,REJECT
-  - RULE-SET,dewasa,porn # Mengarah ke grup 'porn'
-  
-  # 2. Local Direct (Wajib Direct biar banking/lokal aman)
+  - RULE-SET,torrent,REJECT
+  - RULE-SET,dewasa,porn
+
+  # 2. Direct untuk Banking & Speedtest (PENTING biar M-Banking aman)
   - RULE-SET,bank,DIRECT
   - RULE-SET,speedtest,DIRECT
+
+  # 3. LAN & Local IP Direct
   - IP-CIDR,127.0.0.0/8,DIRECT
   - IP-CIDR,10.0.0.0/8,DIRECT
   - IP-CIDR,172.16.0.0/12,DIRECT
   - IP-CIDR,192.168.0.0/16,DIRECT
   - IP-CIDR,224.0.0.0/4,DIRECT
 
-  # 3. Port Blocking / Direct
+  # 4. Port System Direct
   - DST-PORT,53,DIRECT
   - DST-PORT,123/136/137-139,DIRECT
   - SRC-PORT,123/136/137-139,DIRECT,udp
-  
-  # 4. Routing Aplikasi (Agar rule provider terpakai)
-  - RULE-SET,wa,UMUM
-  - RULE-SET,youtube,UMUM
-  - RULE-SET,sosmed,UMUM
-  - RULE-SET,google,UMUM
-  - RULE-SET,browser,UMUM
-  - RULE-SET,torrent,UMUM # Hati-hati, biasanya akun VPN melarang torrent
 
-  # 5. UDP Traffic
-  - NETWORK,UDP,UDP # Semua trafik UDP masuk ke grup UDP
+  # 5. Route Trafik UDP ke grup UDP
+  - NETWORK,UDP,UDP
 
-  # 6. Final Match
+  # 6. Sisanya (Browsing, WA, YouTube) masuk UMUM
   - MATCH,UMUM
